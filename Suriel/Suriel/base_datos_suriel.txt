@@ -1,0 +1,163 @@
+## 1\. Fundamentos y Tipado Avanzado con TypeScript
+
+TypeScript se presenta como un *superset* de JavaScript que añade el crucial **tipado estático** al desarrollo *frontend* y *backend*.
+
+### A. Tipos de Datos y Estructuras Fundamentales
+
+El material hace hincapié en la definición explícita de tipos para aumentar la predictibilidad del código.
+
+  * **Tipos Primitivos:** Se explican los tipos básicos:
+      * `string` (cadenas de texto).
+      * `number` (incluyendo enteros y flotantes).
+      * `boolean` (valores de verdad, `true` o `false`).
+      * *Nota*: Se asume que el lector ya conoce estos conceptos de JavaScript.
+  * **Tipos de Referencia (Objetos y Arrays):**
+      * **Arrays:** Se detalla cómo definir *arrays* de un tipo específico (`number[]` o `Array<string>`) o *arrays* heterogéneos (usando `any[]` o definiendo un tipo de unión).
+      * **Objetos:** Se cubren los literales de objeto y cómo definir la **forma** precisa de un objeto (qué propiedades existen y de qué tipo son).
+  * **Tipos Especiales:**
+      * `any`: Se describe como el tipo más flexible, permitiendo cualquier tipo de dato, pero se desaconseja su uso salvo casos muy concretos para mantener la seguridad.
+      * `void`: Usado principalmente para funciones que no devuelven un valor.
+      * `unknown`: Una alternativa más segura a `any` que requiere comprobación de tipo antes de su uso.
+
+### B. Organización y Reutilización de Tipos
+
+  * **Type Aliases (Alias de Tipo):** Permite crear nombres propios para combinaciones de tipos complejos o primitivos, haciendo el código más legible (ej: `type Coordenada = { x: number; y: number; }`).
+  * **Interfaces:** Se utilizan para describir la **forma de un objeto**, sirviendo como contratos. Son fundamentales en la **Programación Orientada a Objetos (POO)** para definir la estructura que deben seguir las clases.
+      * **Implementación en Clases:** Se muestra cómo una clase puede `implementar` una interfaz para asegurar que cumple con todas las propiedades y métodos requeridos.
+  * **Genéricos (`Generics`):** Son una herramienta avanzada que permite crear componentes (funciones o clases) que **funcionan con varios tipos, pero manteniendo la seguridad de tipos**. Esto es clave para la reutilización de código (ej: una función `identidad<T>(arg: T): T` que devuelve el argumento que recibe, sea cual sea su tipo `T`).
+  * **Literal Types (Tipos Literales):** Permiten definir tipos que solo pueden contener un valor específico, lo que es útil para restringir los parámetros de una función (ej: `type Direccion = "arriba" | "abajo";`).
+
+### C. Funciones, Clases y Seguridad
+
+  * **Funciones Tipadas:** Se define explícitamente el tipo de los **parámetros** y el tipo del **valor de retorno**.
+      * **Parámetros Opcionales y Por Defecto:** Se muestra la sintaxis (`parametro?: tipo` o `parametro: tipo = valorPorDefecto`).
+  * **Clases y POO:**
+      * **Modificadores de Acceso:** Se explica el uso de `public` (accesible desde cualquier lugar), `private` (solo accesible desde dentro de la clase) y `protected` (accesible desde la clase y sus subclases).
+      * `readonly`: Modificador que asegura que una propiedad solo puede ser asignada en el constructor.
+  * **Seguridad y Optimización:**
+      * **Strict Mode:** Se promueve su activación (`"strict": true` en `tsconfig.json`) para forzar un tipado riguroso, incluyendo la comprobación de valores potencialmente nulos o indefinidos.
+      * **Narrowing (Estrechamiento de Tipos):** Técnicas de análisis de código (`if (typeof variable === 'string')`) que le permiten a TypeScript refinar el tipo de una variable dentro de un bloque de código, asegurando operaciones válidas.
+
+-----
+
+## 2\. Node.js para Desarrolladores Experimentados
+
+El tutorial está dirigido a programadores ya familiarizados con la **Programación Orientada a Objetos** (Ruby, Python, PHP, Java) que se inician en el entorno *server-side* de JavaScript.
+
+  * **Enfoque y Audiencia:** El objetivo es ir más allá del "Hola Mundo" para crear aplicaciones reales, asumiendo que los lectores ya manejan estructuras de control y tipos de datos básicos de JavaScript.
+  * **Uso de Express:** Se elige el *framework* **Express.js** como base para la aplicación, facilitando la creación de *endpoints* y la gestión de la lógica de la aplicación.
+  * **Manejo de Peticiones y Rutas:**
+      * Se define la lógica de enrutamiento con `express.Router()`.
+      * Los **Manejadores de Petición** (funciones de *callback*) reciben los objetos `req` (petición del cliente) y `res` (respuesta del servidor), permitiendo acceder a parámetros, datos del formulario y enviar contenido al cliente.
+      * **Ejemplo de Datos Dinámicos:** Se ilustra el envío de un objeto JavaScript al renderizar la vista, como el siguiente ejemplo (simulando artículos disponibles):
+        ```javascript
+        var datos = {
+          titulo: 'Articulos disponibles a la fecha',
+          articulos: [
+            { codigo: 1, precio: 12, descripcion: 'peras' },
+            { codigo: 2, precio: 132, descripcion: 'manzanas' },
+            // ...
+          ],
+          descuento: { lunes: '5%', martes: '10%' }
+        };
+        res.render('index', datos); // Renderiza la vista 'index' con estos datos
+        ```
+  * **Plantillas de Vistas (`Handlebars` - HBS):** Se utiliza un motor de plantillas (ej: Handlebars) para generar el HTML dinámicamente a partir de los datos pasados por el servidor.
+      * **Uso de *Loops*:** Se muestra cómo iterar sobre un *array* de datos usando sintaxis del motor de plantillas:
+        ```hbs
+        <h1>{{titulo}}</h1>
+        <table border="1">
+          {{#each articulos}}
+            <tr> 
+              </tr>
+          {{/each}}
+        </table>
+        ```
+
+-----
+
+## 3\. Python para Todos: Del Básico al Funcional
+
+Python se destaca por su **legibilidad** y su naturaleza **multi-paradigma**, siendo fuerte, dinámico e interpretado.
+
+### A. Tipado, Colecciones y Estructuras de Control
+
+  * **Tipado Dinámico y Fuerte:** El tipo de una variable se establece en tiempo de ejecución, pero el lenguaje es estricto en la necesidad de conversiones explícitas entre tipos (no permite sumar directamente un número a una cadena).
+  * **Colecciones de Datos:**
+      * **Listas:** Secuencias ordenadas y **mutables**. Ideales para colecciones que cambian de tamaño.
+      * **Tuplas:** Secuencias ordenadas e **inmutables**. Ideales para datos fijos o como claves en diccionarios.
+      * **Diccionarios:** Colecciones de pares `clave: valor` (similares a objetos en JavaScript o *hashes*), que permiten una recuperación de datos muy eficiente.
+  * **Control de Flujo:** Uso estándar de `if`, `elif` y `else` para la toma de decisiones, y `for` (para iterar sobre colecciones) y `while` (para bucles basados en condiciones).
+
+### B. Programación Avanzada
+
+  * **Programación Orientada a Objetos (POO):**
+      * **Herencia:** Se explica la **herencia simple** (una clase hereda de otra) y la **herencia múltiple** (una clase hereda de varias clases base).
+      * **Encapsulación:** Aunque Python no tiene modificadores de acceso estrictos, se usa la convención de `_` (un *underscore*) y `__` (doble *underscore*) para indicar métodos y atributos protegidos o privados.
+      * **Polimorfismo:** La capacidad de que un mismo método tenga diferentes implementaciones en clases derivadas.
+  * **Programación Funcional:**
+      * **Funciones de Orden Superior:** Funciones que toman otras funciones como argumento o las devuelven (ej: `map`, `filter`, `reduce`).
+      * **Funciones *Lambda***: Funciones anónimas pequeñas, útiles para operaciones sencillas en una sola línea.
+      * **Comprensión de Listas:** Una sintaxis concisa y "pythónica" para crear listas de forma rápida y legible.
+      * **Decoradores:** Funciones que modifican o "decoran" otras funciones, envolviendo su comportamiento sin modificar su código interno.
+
+### C. Conectividad y Pruebas
+
+  * **Manejo de Archivos (I/O):** Se detallan las operaciones de lectura, escritura y manejo de errores (`IOError`) al interactuar con el sistema de archivos.
+  * **Manejo de Excepciones:** Se utiliza la estructura `try-except` para capturar errores como `ZeroDivisionError` o errores de acceso a archivos, permitiendo un manejo controlado del flujo de la aplicación.
+  * **Conexión a Bases de Datos:**
+      * Se utiliza la DB API de Python para interactuar con bases de datos relacionales (ej: SQLite 3).
+      * Pasos clave: `connect()` (establecer la conexión), `cursor()` (crear un objeto para ejecutar comandos), `execute()` (ejecutar comandos SQL), y manejo de transacciones con `commit()` o `rollback()`.
+  * **Testing:** Se mencionan herramientas de prueba como **Doctest** (para probar ejemplos dentro de la documentación) y **unittest** (un módulo de pruebas unitarias completo).
+
+-----
+
+## 4\. Programación Web Avanzada con PHP
+
+PHP (Hypertext Preprocessor) es un lenguaje de *scripting* del lado del servidor, compatible con entornos **Open Source** como Apache/Linux, y que opera incrustando código en documentos HTML para generar la salida final.
+
+### A. Fundamentos del Servidor
+
+  * **Procesamiento:** El código PHP se procesa en el servidor antes de que se envíe la página al cliente. El resultado final siempre es HTML, lo que lo hace transparente para el navegador.
+  * **Entorno de Desarrollo:** El material hace referencia al uso de **Apache 2.0.5.0** y **PHP 5.0**, así como a la compatibilidad con bases de datos como **MySQL**.
+  * **Sintaxis de Incrustación:** El código PHP se encierra entre las etiquetas `<?PHP` y `?>` dentro del HTML.
+
+### B. Estructura y Buenas Prácticas
+
+  * **Organización del Código:** Se destaca la importancia de la **creación de funciones propias** para encapsular tareas comunes, como las lógicas de negocio (cálculo de impuestos) o las de infraestructura (conexión a DB, generación de *headers* HTML).
+  * **Programación Orientada a Objetos (POO):** Se recomienda su uso para manejar la complejidad de las aplicaciones, incluyendo los conceptos de clases, objetos, herencia y polimorfismo.
+  * **Patrón Modelo-Vista-Controlador (MVC):** Se subraya el uso de MVC como la mejor práctica para **separar la lógica de negocio (Modelo) de la interfaz de usuario (Vista) y la gestión de flujo (Controlador)**, lo cual es esencial para proyectos grandes y mantenibles.
+  * **URL Amigables (`Friendly URLs`):** Se muestra cómo configurar el archivo `.htaccess` de Apache con la directiva `RewriteRule` para lograr URLs limpias y comprensibles, que son gestionadas luego por el controlador principal.
+      * *Ejemplo en `.htaccess`*: `RewriteRule ^usuarios/ usuarios/controller.php`
+
+-----
+
+## 5\. Diseño y Estructura con HTML y CSS
+
+Los documentos cubren la estructura semántica y la presentación visual, los cimientos de cualquier página web.
+
+### A. HTML (Estructura Semántica)
+
+  * **Estructura Base:** Todo documento debe estar contenido en `<HTML>`, y se divide obligatoriamente en la **Cabecera (`<HEAD>`)** y el **Cuerpo (`<BODY>`)**.
+      * El título, crucial para el SEO y la usabilidad, se define en `<TITLE>` dentro de la cabecera.
+  * **Formato de Texto y Enlaces:** Se detallan las etiquetas para dar formato (negrita, cursiva, etc.) y la creación de **enlaces internos y externos** con el atributo `HREF` de la etiqueta `<A>`.
+  * **Contenido Multimedia:**
+      * **Imágenes:** Se explica la inserción (`<IMG SRC="...">`), incluyendo la **alineación** (ej: `ALIGN="LEFT"`) y el **dimensionado** (ej: `WIDTH="100"`), así como la creación de **Mapas de Imagen** (zonas sensibles dentro de una imagen que actúan como enlaces).
+      * **Sonidos:** Se menciona la etiqueta obsoleta `<BGSOUND>` para música de fondo (para navegadores como Explorer) y la opción universal de **crear enlaces** a archivos `.MID` o `.WAV` que abren un programa auxiliar.
+  * **Elementos de Interacción:**
+      * **Tablas (`<TABLE>`):** Uso de `<tr>` (filas), `<td>` (celdas de datos) y `<th>` (celdas de encabezado) para organizar datos.
+      * **Formularios (`<FORM>`):** Creación de controles de usuario (`<INPUT>`, `<TEXTAREA>`, `SELECT`) para recolectar datos del usuario.
+  * **Organización del Documento:** Se incluye el concepto de **Frames (`<FRAME>`, `<FRAMESET>`)** para dividir la ventana del navegador en múltiples documentos HTML independientes.
+  * **HTML5 (Conceptos Breves):** Se mencionan las nuevas capacidades en HTML5, como **Geolocalización** y las opciones de **Almacenamiento Web** (como *localStorage* y *sessionStorage*).
+
+### B. CSS (Presentación y Estilo)
+
+  * **Optimización y Rendimiento:** Se aconseja utilizar **la menor cantidad de archivos CSS posibles**, priorizando esto sobre reducir el tamaño individual de cada archivo para minimizar las peticiones HTTP.
+  * **Selectores y Legibilidad:** Se recomienda encarecidamente el uso de **selectores descriptivos** (ej: `.caja-principal` en lugar de `.c1`) para mejorar la mantenibilidad del código.
+  * **Uso de Librerías y *Frameworks***: Se menciona el uso de librerías como **YUI (Yahoo\! User Interface)** para aprovechar estilos predefinidos y reseteos (*reset.css*).
+  * **Técnicas Avanzadas de Compatibilidad:**
+      * **Detección de Navegador y OS con Clases:** Una técnica avanzada para añadir clases específicas a la etiqueta `<html>` del documento que dependen del navegador y el sistema operativo del usuario.
+      * *Clases de OS*: `win`, `linux`, `mac`.
+      * *Clases de Navegador*: `ie`, `ff3` (Firefox 3), `opera`, `webkit`.
+      * *Ejemplo de Aplicación*: El uso de un selector combinado como `.ff3.win p { ... }` permite aplicar estilos solo a los párrafos en Firefox 3 ejecutándose en Windows, solucionando problemas de compatibilidad específicos.
+      * También se añade la clase `js` si JavaScript está activado.
