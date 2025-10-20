@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Suriel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9203c5426ec94393b2c1058ec46c0b1533f3294a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Suriel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Suriel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

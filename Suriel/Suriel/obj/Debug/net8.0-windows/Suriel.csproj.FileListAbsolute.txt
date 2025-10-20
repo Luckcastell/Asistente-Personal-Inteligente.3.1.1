@@ -130,3 +130,4 @@ C:\Users\lucac\Escritorio\Nueva carpeta\Proyectos\Asistente-Personal-Inteligente
 C:\Users\lucac\Escritorio\Nueva carpeta\Proyectos\Asistente-Personal-Inteligente.3.1.1\Suriel\Suriel\obj\Debug\net8.0-windows\Suriel.pdb
 C:\Users\lucac\Escritorio\Nueva carpeta\Proyectos\Asistente-Personal-Inteligente.3.1.1\Suriel\Suriel\obj\Debug\net8.0-windows\Suriel.genruntimeconfig.cache
 C:\Users\lucac\Escritorio\Nueva carpeta\Proyectos\Asistente-Personal-Inteligente.3.1.1\Suriel\Suriel\obj\Debug\net8.0-windows\ref\Suriel.dll
+C:\Users\lucac\Escritorio\Nueva carpeta\Proyectos\Asistente-Personal-Inteligente.3.1.1\Suriel\Suriel\obj\Debug\net8.0-windows\Suriel.sourcelink.json
