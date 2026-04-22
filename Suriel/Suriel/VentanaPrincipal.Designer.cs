@@ -53,6 +53,7 @@
             flowLayoutPanel7 = new FlowLayoutPanel();
             botonBorrarHistorial = new Button();
             contenedorTitulo = new FlowLayoutPanel();
+            label2 = new Label();
             contenedorHerramientas = new FlowLayoutPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             botonCargarTxt = new Button();
@@ -62,6 +63,7 @@
             contenedorDeModos.SuspendLayout();
             contenedorHistorial.SuspendLayout();
             flowLayoutPanel5.SuspendLayout();
+            contenedorTitulo.SuspendLayout();
             contenedorHerramientas.SuspendLayout();
             SuspendLayout();
             // 
@@ -91,7 +93,7 @@
             // 
             botonEnviar.BackColor = Color.White;
             botonEnviar.Font = new Font("Segoe UI", 14F);
-            botonEnviar.Location = new Point(3, 336);
+            botonEnviar.Location = new Point(3, 356);
             botonEnviar.Name = "botonEnviar";
             botonEnviar.Size = new Size(126, 37);
             botonEnviar.TabIndex = 2;
@@ -256,8 +258,9 @@
             label1.Name = "label1";
             label1.Size = new Size(137, 25);
             label1.TabIndex = 4;
-            label1.Text = "Modos";
+            label1.Text = "Historiales";
             label1.TextAlign = ContentAlignment.MiddleCenter;
+            label1.Click += label1_Click;
             // 
             // checkboxHistorial1
             // 
@@ -269,6 +272,7 @@
             checkboxHistorial1.TabIndex = 5;
             checkboxHistorial1.Text = "Historial 1";
             checkboxHistorial1.UseVisualStyleBackColor = false;
+            checkboxHistorial1.CheckedChanged += checkboxHistorial1_CheckedChanged;
             // 
             // checkboxHistorial2
             // 
@@ -336,10 +340,25 @@
             // contenedorTitulo
             // 
             contenedorTitulo.BackColor = Color.DimGray;
+            contenedorTitulo.Controls.Add(label2);
             contenedorTitulo.Location = new Point(153, 5);
             contenedorTitulo.Name = "contenedorTitulo";
             contenedorTitulo.Size = new Size(544, 60);
             contenedorTitulo.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.None;
+            label2.BackColor = Color.DarkGray;
+            label2.Font = new Font("Segoe UI", 16F, FontStyle.Bold | FontStyle.Italic);
+            label2.Location = new Point(0, 0);
+            label2.Margin = new Padding(0);
+            label2.Name = "label2";
+            label2.Size = new Size(544, 60);
+            label2.TabIndex = 7;
+            label2.Text = "S  U  R  I  E  L";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            label2.Click += label2_Click;
             // 
             // contenedorHerramientas
             // 
@@ -380,7 +399,7 @@
             flowLayoutPanel3.BackColor = Color.Gray;
             flowLayoutPanel3.Location = new Point(3, 297);
             flowLayoutPanel3.Name = "flowLayoutPanel3";
-            flowLayoutPanel3.Size = new Size(126, 33);
+            flowLayoutPanel3.Size = new Size(126, 53);
             flowLayoutPanel3.TabIndex = 12;
             // 
             // VentanaPrincipal
@@ -405,6 +424,7 @@
             contenedorDeModos.ResumeLayout(false);
             contenedorHistorial.ResumeLayout(false);
             flowLayoutPanel5.ResumeLayout(false);
+            contenedorTitulo.ResumeLayout(false);
             contenedorHerramientas.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -441,5 +461,6 @@
         private FlowLayoutPanel flowLayoutPanel7;
         private Button botonBorrarHistorial;
         private Button botonCargarTxt;
+        private Label label2;
     }
 }

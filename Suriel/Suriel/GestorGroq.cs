@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Linq; // Necesario para Select, OrderByDescending, Take
+using System.Linq;
+using Suriel; // Necesario para Select, OrderByDescending, Take
 
 // --- Estructuras para la Comunicación con la API de Groq ---
 
@@ -44,17 +45,109 @@ public class OpcionRespuesta
 
 public class GestorGroq
 {
+
+    private readonly VentanaPrincipal ventanaPrincipal;
+
     // Constantes de configuración.
     private const string URL_GROQ_API = "https://api.groq.com/openai/v1/chat/completions";
     private const string NOMBRE_MODELO = "llama-3.1-8b-instant";
-    private const string CLAVE_API_GROQ = "";
+    private const string CLAVE_API_GROQ = "gsk_6vojNKlaRyNZiPzAqLwjWG"    "dyb3FYhmGB8upYjZ7JSCHKORuTsyfe";
     private const string RUTA_BDP = "Datos/BDPrivada"; // Carpeta para guardar archivos de la Base de Datos Privada.
 
     // --- LISTA DE ARCHIVOS DE LA BD PRIVADA (Tus PDFs) ---
-    private static readonly List<string> RUTAS_BD_PRIVADA = new List<string>
+    private readonly List<string> RUTAS_BD_PRIVADA = new List<string>();
+    private const string ARCHIVO_RUTAS = "bd_privada_rutas.txt";
+
+    /// <summary>
+    /// Documentacion: Carga las rutas de archivos de la BDPrivada desde un archivo de persistencia.
+    /// </summary>
+    public void CargarRutasBD()
     {
-        "Curso-HTML_CSS-fusionado.pdf" // Asume que este archivo ha sido convertido a texto plano
-    };
+        string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ARCHIVO_RUTAS);
+
+        // Si el archivo de rutas existe, lo lee y añade las rutas a la lista.
+        if (File.Exists(rutaArchivo))
+        {
+            try
+            {
+                // Lee todas las líneas y las añade a la lista.
+                RUTAS_BD_PRIVADA.AddRange(File.ReadAllLines(rutaArchivo));
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores de lectura del archivo
+                ventanaPrincipal.MostrarMensajeEnChat("Sistema", $"⚠️ Error al cargar las rutas guardadas: {ex.Message}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Documentacion: Guarda las rutas de archivos de la BDPrivada en un archivo de persistencia.
+    /// </summary>
+    public void GuardarRutasBD()
+    {
+        string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ARCHIVO_RUTAS);
+
+        // Solo si hay rutas para guardar, procede con la escritura.
+        if (RUTAS_BD_PRIVADA.Count > 0)
+        {
+            try
+            {
+                // Escribe la lista completa de rutas como líneas en el archivo.
+                File.WriteAllLines(rutaArchivo, RUTAS_BD_PRIVADA);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores de escritura
+                // (No mostramos MessageBox aquí, ya que el programa se está cerrando).
+                Console.WriteLine($"Error al guardar las rutas: {ex.Message}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Copia un archivo cargado por el usuario a la Base de Datos Privada (BDP).
+    /// </summary>
+    public void CopiarArchivoABDP(string rutaOriginal)
+    {
+        try
+        {
+            // Define el directorio destino ("BDPrivada" en la carpeta de la aplicación).
+            string directorioDestino = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BDPrivada");
+
+            // 1. Asegurarse de que el directorio exista
+            if (!Directory.Exists(directorioDestino))
+            {
+                Directory.CreateDirectory(directorioDestino);
+            }
+
+            string nombreArchivo = Path.GetFileName(rutaOriginal);
+            string rutaDestino = Path.Combine(directorioDestino, nombreArchivo);
+
+            // 2. Copiar el archivo. 'true' permite sobrescribir si ya existe.
+            File.Copy(rutaOriginal, rutaDestino, true);
+
+            // ✅ CORRECCIÓN CLAVE: Agregar la ruta completa del archivo copiado a la lista en memoria.
+            // Esto es lo que resuelve el defecto de persistencia.
+            if (!RUTAS_BD_PRIVADA.Contains(rutaDestino))
+            {
+                RUTAS_BD_PRIVADA.Add(rutaDestino);
+            }
+
+            MessageBox.Show($"¡Archivo '{nombreArchivo}' copiado con éxito a la Base de Datos Privada! Si el programa no lo lee pruebe reiniciar el programa.",
+                            "Copia Exitosa",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"❌ Error al copiar el archivo: {ex.Message}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+        }
+    }
+
 
     // Constantes para la lógica de Selección de Relevancia (RAG).
     private const int MAXIMO_MENSAJES_RELEVANTES = 6;
@@ -288,32 +381,6 @@ public class GestorGroq
         catch (Exception ex)
         {
             Console.WriteLine($"Error al borrar historial {rutaArchivo}: {ex.Message}");
-        }
-    }
-
-    // <<--- MÉTODO PARA COPIAR ARCHIVOS (Implementación solicitada para VentanaPrincipal.cs)
-    /// <summary>
-    /// Copia un archivo cargado por el usuario a la Base de Datos Privada (BDP).
-    /// </summary>
-    public void CopiarArchivoABDP(string rutaOrigen, string nombreNuevo)
-    {
-        string directorioDestino = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RUTA_BDP);
-
-        if (!Directory.Exists(directorioDestino))
-        {
-            Directory.CreateDirectory(directorioDestino);
-        }
-
-        string rutaDestinoCompleta = Path.Combine(directorioDestino, nombreNuevo);
-
-        try
-        {
-            File.Copy(rutaOrigen, rutaDestinoCompleta, true); // true para sobrescribir
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error al copiar el archivo a la BDP: {ex.Message}");
-            throw; // Re-lanzar para que VentanaPrincipal pueda mostrar el error.
         }
     }
 }

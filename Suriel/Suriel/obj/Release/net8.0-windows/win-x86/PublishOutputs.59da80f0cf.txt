@@ -1,0 +1,9 @@
+C:\Users\lucac\Downloads\Suriell\Suriel.pdb
+C:\Users\lucac\Downloads\Suriell\VentanaPrincipal.cs
+C:\Users\lucac\Downloads\Suriell\D3DCompiler_47_cor3.dll
+C:\Users\lucac\Downloads\Suriell\PenImc_cor3.dll
+C:\Users\lucac\Downloads\Suriell\PresentationNative_cor3.dll
+C:\Users\lucac\Downloads\Suriell\vcruntime140_cor3.dll
+C:\Users\lucac\Downloads\Suriell\wpfgfx_cor3.dll
+C:\Users\lucac\Downloads\Suriell\sni.dll
+C:\Users\lucac\Downloads\Suriell\Suriel.exe

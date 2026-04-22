@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Suriel
 {
@@ -30,6 +31,9 @@ namespace Suriel
             // Inicializa las listas de controles y conecta los eventos.
             InicializarListasDeControles();
             ConectarEventosCheckboxes();
+
+            // Cargar rutas guardadas al iniciar.
+            gestorGroq.CargarRutasBD();
 
             // Configuramos la interfaz para reflejar el estado inicial.
             ConfigurarComponentesIniciales();
@@ -184,7 +188,7 @@ namespace Suriel
             MostrarMensajeEnChat("Suriel", "¡Hola! Soy Suriel, tu asistente personal. ¿En qué te puedo ayudar hoy?");
 
             // Seteamos el título de la ventana.
-            this.Text = "Suriel - Asistente de Programación";
+            this.Text = "Suriel - Asistente personal";
             this.Width = 717;
             this.Height = 540;
 
@@ -203,7 +207,7 @@ namespace Suriel
         /// <summary>
         /// Documentacion: Muestra un mensaje en el área de chat de la interfaz.
         /// </summary>
-        private void MostrarMensajeEnChat(string nombreRemitente, string contenidoMensaje)
+        public void MostrarMensajeEnChat(string nombreRemitente, string contenidoMensaje)
         {
             // La fuente y el color cambian para diferenciar al usuario y al asistente, y ahora al sistema.
             Color colorTexto;
@@ -334,6 +338,9 @@ namespace Suriel
         /// </summary>
         private void VentanaPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Guardar rutas antes de cerrar la aplicación.
+            gestorGroq.GuardarRutasBD();
+
             // Liberamos los recursos del sintetizador de voz para evitar problemas.
             gestorVoz.DetenerAudio();
         }
@@ -394,18 +401,18 @@ namespace Suriel
                         string nombreArchivo = Path.GetFileName(rutaOrigen);
 
                         // Usar el método de GestorGroq para copiar el archivo
-                        gestorGroq.CopiarArchivoABDP(rutaOrigen, nombreArchivo);
+                        gestorGroq.CopiarArchivoABDP(rutaOrigen);
 
                         MostrarMensajeEnChat("Sistema", $"Archivo '{nombreArchivo}' cargado exitosamente a la BDPrivada.");
 
                         // Forzar una actualización de la BDP (opcional, pero útil si el modo ya está activo)
                         ActualizarChatConHistorialActivo();
 
-                        MessageBox.Show(
-                            $"El archivo '{nombreArchivo}' ha sido copiado a la carpeta de ejecución.\n\nRECORDATORIO: El sistema solo lee el contenido si está en formato de TEXTO PLANO. Si subís un PDF normal, el RAG puede fallar.",
-                            "Archivo Cargado",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        //MessageBox.Show(
+                        //    $"El archivo '{nombreArchivo}' ha sido copiado a la carpeta de ejecución.\n\nRECORDATORIO: El sistema solo lee el contenido si está en formato de TEXTO PLANO. Si subís un PDF normal, el RAG puede fallar.",
+                        //    "Archivo Cargado",
+                        //    MessageBoxButtons.OK,
+                        //    MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
@@ -442,5 +449,19 @@ namespace Suriel
         {
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkboxHistorial1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
